@@ -4,9 +4,8 @@ Created on Fri Mar 10 12:28:02 2023
 
 @author: Sebastian
 """
-
-import uuid
+import random
 
 with open("uuid.txt", "w") as output:
-    id = str(uuid.uuid4())
-    output.write(id)
+    id = random.randint(11, 100000)
+    output.write(str(id))
