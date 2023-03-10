@@ -16,9 +16,9 @@ BAUD_RATE = 9600
 with open("uuid.txt", "r") as uuid_file:
     UUID = uuid_file.read()
 
+with open("dbinfo.txt", "r") as dbinfo:
+    mongo_connection = pymongo.MongoClient(dbinfo.read())
 #Set up db connection
-mongo_connection = pymongo.MongoClient(
-    "mongodb://ec2-13-38-62-82.eu-west-3.compute.amazonaws.com:27017")
 mongo_db = mongo_connection["weather"]
 temperature_db = mongo_db["temperature"]
 
