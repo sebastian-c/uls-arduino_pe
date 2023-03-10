@@ -66,8 +66,9 @@ with serial.Serial(ARDUINO_COM_PORT, BAUD_RATE, timeout=1) as ser:
             message_type = identify_message(string)
             
             if message_type == "data":
-                message_cache.append(process_data(string))
-                print(string)
+                data_out = process_data(string)
+                message_cache.append(data_out)
+                print(data_out)
             if message_type == "command":
                 message_result = send_data(message_cache, temperature_db)
                 message_cache = []
