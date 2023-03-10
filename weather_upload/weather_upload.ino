@@ -8,16 +8,19 @@
 #include "DHT.h"
 
 #define DHTPIN 2     // Digital pin connected to the DHT sensor
-
 // Define model
 #define DHTTYPE DHT11   // DHT 11
-
 // Initialize DHT sensor.
 DHT dht(DHTPIN, DHTTYPE);
 
+// Define button pin
+int buttonPin = 7;
+
 void setup() {
   Serial.begin(9600);
-  Serial.println(F("[MESSAGE] DHTxx test!"));
+  Serial.println(F("[MESSAGE] DHT11 test!"));
+
+  pinMode(buttonPin, INPUT_PULLUP); 
 
   dht.begin();
 }
@@ -53,6 +56,9 @@ void loop() {
   Serial.print(hic);
   Serial.println(F("}"));
 
-  //if() for checking button press
-  // Serial.println(F("[COMMAND] Button press registered on pin 7"))
+  // If button on board is pressed
+  if(digitalRead(buttonPin) == LOW) {
+    Serial.print(F("[COMMAND] Button press registered on pin "));
+    Serial.println(buttonPin);
+  } ;
 }
