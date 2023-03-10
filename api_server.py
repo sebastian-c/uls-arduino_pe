@@ -1,7 +1,7 @@
 from flask import Flask
-import time
 from datetime import datetime
 
+# Import all the data from temperature_average. This is very messy, I'm sorry
 exec(open("temperature_average.py").read())
 
 app = Flask(__name__)

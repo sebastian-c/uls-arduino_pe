@@ -9,7 +9,6 @@ import pymongo
 import pandas as pd
 import numpy as np
 
-
 with open("dbinfo.txt", "r") as dbinfo:
     mongo_connection = pymongo.MongoClient(dbinfo.read())
 #mongo_connection.list_database_names()
@@ -32,9 +31,17 @@ sensor_data = sensor_data.drop("_id", axis = 1)
 temperature_data = pd.DataFrame(temperature_data)
 temperature_data = temperature_data.drop("_id", axis = 1)
 
+# Add temp data to sensor data
 all_data = sensor_data.merge(temperature_data, on = "SensorID", how = "left")
+# Remove missing values
+all_data = all_data.loc[~pd.isnull(all_data["Timestamp"])]
 
+# Convert all names to lowercase
+all_data.location_x = all_data.location_x.apply(str.lower)
+
+# Make random temperature data
 all_data.Temperature = pd.Series(np.random.randn(all_data.shape[0]) * 4 + 23)
 
-all_data.groupby("location_x")["Temperature"].mean()
+# Get mean by location
+all_temps = all_data.groupby("location_x")["Temperature"].mean()
 
