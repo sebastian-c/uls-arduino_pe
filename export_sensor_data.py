@@ -46,12 +46,14 @@ def process_data(data_string, uuid = UUID, header_length = 7):
     data_substring = data_string[header_length:]
     data_json = json.loads(data_substring)
     
-    output_json = {"Timestamp" : datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    output_json = {"Timestamp" : time.time(),
                    "SensorID" : uuid,
                    "Temperature" : data_json["temperature_c"]}
     
     return(output_json)
 
+def delete_data(db_object, uuid = UUID):
+    db_object.delete_many({"SensorID": uuid})
 
 message_cache = []
     
